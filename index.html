@@ -16,6 +16,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
       rel="stylesheet"
     />
+    <!-- <link rel="stylesheet" href="animations.css" /> -->
     <style>
       * {
         box-sizing: border-box;
@@ -33,6 +34,12 @@
         text-align: center;
         transition: background 0.3s, color 0.3s;
         position: relative;
+      }
+      .container {
+        width: 450px;
+        max-width: 100vw;
+        margin: 0 auto;
+        overflow-x: hidden;
       }
       .bubble-layer {
         position: fixed;
@@ -131,24 +138,30 @@
         bottom: -100%;
         left: 0;
         right: 0;
-        background: #fff;
+        background: #9a9b60;
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
         padding: 20px;
         box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
         transition: bottom 0.5s;
         z-index: 1000;
+        display: flex;
+        justify-content: center;
       }
       .gift-slideup.active {
         bottom: 0;
       }
       .gift-card {
-        background: linear-gradient(to right, #0074d9, #7fdbff);
+        position: relative;
+        width: 380px;
+        height: 220px;
+        background: url("bri-card-background.png") center/110% no-repeat;
         color: white;
-        padding: 20px;
-        border-radius: 12px;
-        text-align: center;
-        margin-bottom: 10px;
+        font-weight: bold;
+        padding: 20px 30px 30px 30px;
+        border-radius: 16px;
+        text-align: left;
+        box-sizing: border-box;
       }
       .gift-card button {
         margin-top: 10px;
@@ -530,18 +543,17 @@
         <div class="section">
           <h2>RSVP & Ucapan</h2>
           <form id="rsvpForm">
-            <input
-              type="text"
-              id="name"
-              placeholder="Nama Anda"
+            <input type="text" id="name" placeholder="Nama Anda" required />
+            <textarea
+              id="message"
+              placeholder="Ucapan..."
               required
-            /><br /><br />
-            <textarea id="message" placeholder="Ucapan..." required></textarea
-            ><br /><br />
+              style="height: 150px"
+            ></textarea>
             <select id="attendance">
               <option value="Hadir">Hadir</option>
-              <option value="Tidak Hadir">Tidak Hadir</option></select
-            ><br /><br />
+              <option value="Tidak Hadir">Tidak Hadir</option>
+            </select>
             <button type="submit">Kirim</button>
           </form>
           <div id="historyList"></div>
@@ -554,40 +566,38 @@
         </div>
 
         <div class="gift-slideup" id="giftPanel">
-          <button
-            onclick="hideGift()"
-            style="border-radius: 50px; border: none; color: #e74c3c"
-          >
-            X
-          </button>
-          <div
-            class="gift-card"
-            style="
-              position: relative;
-              background: url('bri-card-background.png') center/cover no-repeat;
-              color: #ffffff;
-              font-weight: bold;
-              padding: 30px 20px;
-              border-radius: 16px;
-            "
-          >
-            <br /><br /><br />
+          <div>
             <div
+              class="gift-card"
               style="
-                font-family: 'Share Tech Mono', monospace;
-                font-size: 1.6em;
-                letter-spacing: 3px;
+                position: relative;
+                background: url('bri-card-background.png') center/cover
+                  no-repeat;
+                color: #ffffff;
+                font-weight: bold;
+                padding: 30px 20px;
+                border-radius: 16px;
               "
             >
-              1710 0027 01244
+              <br /><br /><br /><br /><br />
+              <div
+                style="
+                  font-family: 'Share Tech Mono', monospace;
+                  font-size: 1.6em;
+                  letter-spacing: 3px;
+                "
+              >
+                1710 0076 44605
+              </div>
+              <div style="margin: 10px 0 20px">ACH. FADLI FATURROCHIM</div>
+              <input
+                type="text"
+                value="1710007644605"
+                id="rekInput"
+                style="position: absolute; left: -9999px"
+              />
             </div>
-            <div style="margin: 10px 0 20px">ACH FADLI F</div>
-            <input
-              type="text"
-              value="1710002701244"
-              id="rekInput"
-              style="position: absolute; left: -9999px"
-            />
+            <br />
             <button
               id="copyBtn"
               onclick="copyRekening()"
@@ -600,6 +610,18 @@
               "
             >
               Copy
+            </button>
+            <button
+              onclick="hideGift()"
+              style="
+                padding: 8px 20px;
+                border: none;
+                background: #ffffff;
+                color: rgb(255, 0, 0);
+                border-radius: 8px;
+              "
+            >
+              Tutup
             </button>
           </div>
         </div>
