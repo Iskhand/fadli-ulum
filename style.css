@@ -1,0 +1,289 @@
+body {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  background-color: #f7ecee;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.book {
+  position: relative;
+  width: 80vw;
+  height: 90vh;
+  perspective: 2000px;
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+.isi {
+  background-color: #ffffff7c;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll; /* tetap bisa scroll */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5%;
+}
+
+.isi::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("img/img1.jpeg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 3em;
+  font-family: "Great Vibes", cursive;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 1s;
+  transform-origin: left;
+  backface-visibility: hidden;
+}
+.depan {
+  background-color: #0000008c;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px 4px black;
+  text-align: center;
+  padding: 5%;
+  border-radius: 10%;
+}
+.cover.open {
+  transform: rotateY(-180deg);
+}
+
+.pages {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url(img/bg-blue.jpg);
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  box-sizing: border-box;
+  backface-visibility: hidden;
+  border-left: 1px solid #ccc;
+  transition: transform 1s ease-in-out, z-index 0s 0.5s;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* font-size: 2em; */
+  transform-origin: left;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.gallery img {
+  width: 100%;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  border-radius: 6px;
+}
+form#rsvpForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+form#rsvpForm input,
+form#rsvpForm textarea,
+form#rsvpForm select {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1em;
+}
+.menu {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.5rem;
+  background: rgba(94, 94, 94, 0.95);
+  width: 60%;
+  max-width: 80vw;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.menu.fade-in {
+  opacity: 1;
+}
+
+.menu button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #ffffff;
+  transition: transform 0.2s, color 0.3s;
+}
+
+.menu button:hover {
+  transform: scale(1.2);
+  color: #ff0000;
+}
+
+.menu button.active {
+  color: #b48c5f;
+  transform: scale(1.4);
+}
+
+.music-button.paused {
+  animation: none;
+}
+.page h2 {
+  font-family: "Playfair Display", serif;
+  margin-bottom: 20px;
+}
+.gift {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  font-size: 15pt;
+}
+.gift-card {
+  position: relative;
+  width: 380px;
+  height: 220px;
+  background: url("img/Atm-mandiri.png") center/110% no-repeat;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  padding: 20px 30px 30px 30px;
+  border-radius: 16px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+.bubble {
+  position: absolute;
+  bottom: -50px;
+  width: 15px;
+  height: 15px;
+  background: rgba(255, 0, 0, 0.486);
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+  pointer-events: none;
+}
+
+.simply-countdown {
+  overflow: hidden;
+  display: flex;
+  font-family: "Arial", sans-serif;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+.simply-countdown > .simply-section {
+  width: 10px;
+  height: 10px;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: left;
+  margin: 10px;
+  color: aqua;
+  background: rgb(15, 15, 66);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 10%;
+}
+.simply-countdown > .simply-section .simply-amount,
+.simply-countdown > .simply-section .simply-word {
+  display: block;
+  text-align: center;
+}
+
+.simply-countdown > .simply-section .simply-amount {
+  font-size: 1.6rem;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-120vh) scale(1.5);
+    opacity: 0;
+  }
+}
+/* MODE HP / TABLET */
+@media screen and (max-width: 768px) {
+  .book {
+    width: 95vw;
+    height: 90vh;
+  }
+
+  .page {
+    font-size: 1.2em;
+  }
+
+  .cover {
+    font-size: 2.2em;
+  }
+
+  .menu {
+    width: 90vw;
+    padding: 0.5rem 0.5rem;
+  }
+
+  .menu button {
+    font-size: 1.2rem;
+  }
+}
+
+/* MODE DESKTOP / LAPTOP */
+@media screen and (min-width: 769px) {
+  .page {
+    font-size: 2em;
+  }
+
+  .menu {
+    width: 60%;
+  }
+}

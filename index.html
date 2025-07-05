@@ -12,709 +12,478 @@
       href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <!-- <link rel="stylesheet" href="animations.css" /> -->
-    <style>
-      * {
-        box-sizing: border-box;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        font-family: "Arial", sans-serif;
-        overflow-x: hidden;
-        background: #be9f5b;
-        text-align: center;
-        transition: background 0.3s, color 0.3s;
-        position: relative;
-      }
-      .container {
-        width: 450px;
-        max-width: 100vw;
-        margin: 0 auto;
-        overflow-x: hidden;
-      }
-      .bubble-layer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: 999;
-      }
-      .section {
-        padding: 40px 20px;
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 1s ease, transform 1s ease;
-      }
-      .section.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .section h2 {
-        font-family: "Playfair Display", serif;
-        margin-bottom: 20px;
-      }
-      .depan {
-        background: url("img1.jpeg") center/cover no-repeat;
-      }
-      .cover {
-        background-color: #0000008c;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: end;
-        color: rgb(255, 255, 255);
-        text-shadow: 1px 1px 4px black;
-        text-align: center;
-        padding-bottom: 25%;
-      }
-      .cover h1 {
-        font-size: 3em;
-        font-family: "Great Vibes", cursive;
-      }
-      .btn-open,
-      button,
-      .dark-toggle {
-        background: #fff;
-        color: #000;
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        font-size: 1em;
-        border-radius: 10px;
-        transition: transform 0.3s;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .btn-open:hover,
-      button:hover,
-      .dark-toggle:hover {
-        transform: scale(1.05);
-      }
-      .hidden {
-        display: none;
-      }
-      .gallery {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
-      .gallery img {
-        width: 100%;
-        aspect-ratio: 3/2;
-        object-fit: cover;
-        border-radius: 6px;
-      }
-      form#rsvpForm {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-      }
-      form#rsvpForm input,
-      form#rsvpForm textarea,
-      form#rsvpForm select {
-        width: 100%;
-        max-width: 400px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 1em;
-      }
-      .gift-slideup {
-        position: fixed;
-        bottom: -100%;
-        left: 0;
-        right: 0;
-        background: #9a9b60;
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-        padding: 20px;
-        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
-        transition: bottom 0.5s;
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-      }
-      .gift-slideup.active {
-        bottom: 0;
-      }
-      .gift-card {
-        position: relative;
-        width: 380px;
-        height: 220px;
-        background: url("Atm-mandiri.png") center/110% no-repeat;
-        color: white;
-        font-weight: bold;
-        padding: 20px 30px 30px 30px;
-        border-radius: 16px;
-        text-align: left;
-        box-sizing: border-box;
-      }
-      .gift-card button {
-        margin-top: 10px;
-        padding: 8px 16px;
-      }
-      .dark-mode {
-        background: #121212;
-        color: #fff;
-      }
-      .dark-mode .section {
-        background-color: #1e1e1e;
-      }
-      .dark-toggle {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        z-index: 1001;
-      }
-      .bubble {
-        position: absolute;
-        bottom: -50px;
-        width: 15px;
-        height: 15px;
-        background: rgba(255, 255, 255, 0.486);
-        border-radius: 50%;
-        animation: floatUp linear infinite;
-        pointer-events: none;
-      }
-      @keyframes floatUp {
-        0% {
-          transform: translateY(0) scale(1);
-          opacity: 0.4;
-        }
-        100% {
-          transform: translateY(-120vh) scale(1.5);
-          opacity: 0;
-        }
-      }
-    </style>
+    <script src="countdown/simplyCountdown.min.js"></script>
   </head>
   <body>
+    <audio id="bg-music" src="musik2.mp3" loop autoplay></audio>
     <div class="bubble-layer" id="bubbleLayer"></div>
-    <!-- <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button> -->
-    <div class="container">
-      <audio id="bgm" loop>
-        <source src="musik2.mp3" type="audio/mpeg" />
-      </audio>
-
-      <div class="depan">
-        <div class="cover" id="cover">
+    <div class="book">
+      <div class="cover" onclick="openBook()">
+        <div class="depan">
           <h1>Fadli & Ulum</h1>
           <p id="namaTamu">Untuk: Tamu Undangan</p>
-          <button class="btn-open" onclick="openInvitation()">
-            Buka Undangan
-          </button>
         </div>
       </div>
-
-      <div id="mainContent" class="hidden">
-        <div class="section" style="padding: 40px 20px">
-          <div
-            style="
-              clip-path: polygon(
-                25% 6.7%,
-                75% 6.7%,
-                100% 50%,
-                75% 93.3%,
-                25% 93.3%,
-                0% 50%
-              );
-              width: 250px;
-              height: 250px;
-              margin: 0 auto;
-              overflow: hidden;
-            "
-          >
-            <img
-              src="IMG_0033_20250629_142033_3600 (1).jpeg.jpg"
-              alt="Foto Mempelai"
-              style="width: 100%; height: 100%; object-fit: cover"
-            />
-          </div>
-          <p style="font-style: italic; margin-top: 20px">
-            Kami mengundang anda untuk menghadiri acara pernikahan dari
-          </p>
-          <h1
-            style="
-              font-family: 'Great Vibes', cursive;
-              font-size: 2.5em;
-              margin: 10px 0;
-            "
-          >
-            Fadli & Ulum
-          </h1>
-          <div style="margin: 20px 0">
-            <div>
-              <strong>RESEPSI</strong><br />
-              PUKUL 10.00 WIB - Selesai
-            </div>
-          </div>
-          <p>Kediaman Mempelai Wanita</p>
-          <p
-            style="
-              font-family: 'Playfair Display', serif;
-              font-size: 1.2em;
-              font-style: italic;
-              margin-top: 20px;
-            "
-          >
-            Rabu, 13 Agustus 2025
-          </p>
-        </div>
-        <div class="section">
-          <img src="bismillah.png" alt="" style="width: 70%" />
-          <p style="font-size: 125%">
-            وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا
-            لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً
-            ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ
-          </p>
-          <p>
-            "Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan
-            pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu
-            merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan
-            kasih sayang. Sesungguhnya pada yang demikian itu benar-benar
-            terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir"
-          </p>
-          <p>– QS. Ar-Rum 21 –</p>
-        </div>
-
-        <div class="section">
-          <h2
-            style="
-              font-family: 'Playfair Display', serif;
-              font-size: 1.2em;
-              font-style: italic;
-            "
-          >
-            Assalamu'alaikum
-          </h2>
-          <p>
-            Alhamdulillahi Rabbil ‘Alamin, dengan rahmat dan ridho Allah
-            Subhanahu wa Ta’ala, kami telah melangsungkan akad nikah putra dan
-            putri kami
-          </p>
-          <br />
-          <div
-            style="
-              width: 250px;
-              height: 320px;
-              margin: 0 auto;
-              border-radius: 50%;
-              overflow: hidden;
-              border: 4px solid #d19aaa; /* opsional: bingkai */
-              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* opsional: bayangan */
-            "
-          >
-            <img
-              src="img2.jpg"
-              alt="Foto Mempelai"
-              style="width: 100%; height: 100%; object-fit: cover"
-            />
-          </div>
-          <br />
-          <p
-            style="
-              font-family: 'Great Vibes', cursive;
-              font-size: 2.5em;
-              margin: 10px 0;
-            "
-          >
-            Achmad Fadli Faturrochim
-          </p>
-          <p>Putra dari Bapak Ali Muchtar & Ibu Misrani</p>
-          <b>(Banyuwangi, Jawa Timur)</b>
-          <p
-            style="
-              font-family: 'Great Vibes', cursive;
-              font-size: 2.5em;
-              margin: 10px 0;
-            "
-          >
-            &
-          </p>
-          <p
-            style="
-              font-family: 'Great Vibes', cursive;
-              font-size: 2.5em;
-              margin: 10px 0;
-            "
-          >
-            Ludfi Hidayatul Ulum
-          </p>
-          <p>Putri dari Bapak Lutfianto & Ibu Yanti</p>
-          <b>(Blitar, Jawa Timur)</b>
-          <br />
-          <br />
-          <div
-            style="
-              width: 250px;
-              height: 320px;
-              margin: 0 auto;
-              border-radius: 50%;
-              overflow: hidden;
-              border: 4px solid #d19aaa; /* opsional: bingkai */
-              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* opsional: bayangan */
-            "
-          >
-            <img
-              src="img2.jpg"
-              alt="Foto Mempelai"
-              style="width: 100%; height: 100%; object-fit: cover"
-            />
-          </div>
-        </div>
-        <div class="section">
-          <h3 id="timer"></h3>
-          <p>
-            Untuk itu, dengan segala hormat dan kerendahan hati, kami mengundang
-            Bapak/Ibu/Saudara/i untuk hadir dalam acara tasyakuran pernikahan
-            yang akan kami selenggarakan pada:
-          </p>
-          <p
-            style="
-              font-family: 'Playfair Display', serif;
-              font-size: 1.2em;
-              font-style: italic;
-              margin-top: 20px;
-            "
-          >
-            Rabu, 13 Agustus 2025
-          </p>
-          <p>Kediaman Mempelai Wanita</p>
-          <a
-            class="btn-open"
-            href="https://maps.app.goo.gl/JearkZ1Dec5aQzJS7?g_st=aw"
-            >Lihat Map</a
-          >
-        </div>
-
-        <div class="section">
-          <h2>Galeri</h2>
-          <div class="gallery">
-            <img src="img1.jpeg" /><img src="img2.jpg" /><img src="img3.jpg" />
-            <img src="img4.jpg" /><img src="img5.jpg" /><img src="img6.png" />
-            <img src="img7.jpg" /><img src="img8.jpg" /><img src="img9.jpg" />
-            <img src="img10.jpg" /><img src="img11.jpeg" /><img
-              src="img12.jpg"
-            />
-            <img src="img13.jpg" /><img src="img14.jpg" /><img
-              src="img15.jpg"
-            />
-          </div>
-        </div>
-
-        <div class="section">
-          <h2>Love Story</h2>
-          <div
-            style="
-              position: relative;
-              max-width: 380px;
-              margin: 0 auto;
-              text-align: left;
-            "
-          >
-            <div style="border-left: 2px solid #e74c3c; padding-left: 20px">
-              <div style="margin-bottom: 30px; position: relative">
-                <div
-                  style="
-                    position: absolute;
-                    left: -20px;
-                    top: 0;
-                    width: 16px;
-                    height: 16px;
-                    background: #e74c3c;
-                    border-radius: 50%;
-                  "
-                ></div>
-                <strong>2018, Oktober</strong>
-                <p>
-                  Di tengah hiruk-pikuk kegiatan santri di media sosial, sebuah
-                  flyer AISNU mencuri perhatian Syifa’. Ia melihat foto santri
-                  putri bernama Rania Nurul Rizqia yang meneduhkan hatinya.
-                </p>
-              </div>
-
-              <div style="margin-bottom: 30px; position: relative">
-                <div
-                  style="
-                    position: absolute;
-                    left: -20px;
-                    top: 0;
-                    width: 16px;
-                    height: 16px;
-                    background: #e74c3c;
-                    border-radius: 50%;
-                  "
-                ></div>
-                <strong>2021, Oktober</strong>
-                <p>
-                  Cinta sejati takkan hilang begitu saja. Dalam sebuah ajang
-                  Pemilihan Duta Santri Nasional di Yogyakarta, keduanya
-                  dipertemukan. Rania, dengan kecantikannya dan kecerdasannya,
-                  memikat hati Syifa’. Setiap kalimat dan senyuman Rania,
-                  menjadi kenangan tak terlupakan.
-                </p>
-              </div>
-
-              <div style="margin-bottom: 30px; position: relative">
-                <div
-                  style="
-                    position: absolute;
-                    left: -20px;
-                    top: 0;
-                    width: 16px;
-                    height: 16px;
-                    background: #e74c3c;
-                    border-radius: 50%;
-                  "
-                ></div>
-                <strong>2022, September</strong>
-                <p>
-                  Seperti yang sering terjadi dalam cerita cinta, takdir
-                  memisahkan mereka untuk sementara. Rania melanjutkan studi
-                  S2-nya di negeri yang jauh, Edinburgh-Skotlandia, sementara
-                  Syifa’ menempuh magister di Jakarta.
-                </p>
-              </div>
-
-              <div style="margin-bottom: 30px; position: relative">
-                <div
-                  style="
-                    position: absolute;
-                    left: -20px;
-                    top: 0;
-                    width: 16px;
-                    height: 16px;
-                    background: #e74c3c;
-                    border-radius: 50%;
-                  "
-                ></div>
-                <strong>2023, Oktober</strong>
-                <p>
-                  Tahun ini menjadi titik balik dalam kisah cinta mereka. Rania
-                  kembali ke tanah air, dan keduanya bertemu di ajang Pemilihan
-                  Duta Santri Nasional di Surabaya. Selama agenda berlangsung,
-                  Rania tertarik pada kebaikan, kebijaksanaan, dan ketulusan
-                  Syifa’ sebagai Ketua Umum Duta Santri Nasional. Syifa’
-                  akhirnya mengungkapkan perasaan yang selama ini dia simpan
-                  kepada Rania.
-                </p>
-              </div>
-
-              <div style="margin-bottom: 0; position: relative">
-                <div
-                  style="
-                    position: absolute;
-                    left: -20px;
-                    top: 0;
-                    width: 16px;
-                    height: 16px;
-                    background: #e74c3c;
-                    border-radius: 50%;
-                  "
-                ></div>
-                <strong>2023, November</strong>
-                <p>
-                  Setelah berkenalan lebih jauh serta menyamakan visi dan misi
-                  hidup, Syifa’ memutuskan untuk silaturahmi dan meminta restu
-                  kepada orang tua Rania. Rania pun melakukan hal yang sama.
-                  Dengan izin Allah dan dukungan orang tua, Syifa’ dan Rania
-                  memutuskan untuk melanjutkan ibadah cinta ini dalam ikatan
-                  pernikahan mereka yang mulia.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section">
-          <h2>RSVP & Ucapan</h2>
-          <form id="rsvpForm">
-            <input type="text" id="name" placeholder="Nama Anda" required />
-            <textarea
-              id="message"
-              placeholder="Ucapan..."
-              required
-              style="height: 150px"
-            ></textarea>
-            <select id="attendance">
-              <option value="Hadir">Hadir</option>
-              <option value="Tidak Hadir">Tidak Hadir</option>
-            </select>
-            <button type="submit">Kirim</button>
-          </form>
-          <div id="historyList"></div>
-        </div>
-
-        <div class="section">
-          <h2>Terima Kasih</h2>
-          <p>Kehadiran dan doa restu Anda sangat berarti bagi kami.</p>
-          <button onclick="showGift()">Gift</button>
-        </div>
-
-        <div class="gift-slideup" id="giftPanel">
-          <div>
+      <div class="pages">
+        <section class="page">
+          <div class="isi">
             <div
-              class="gift-card"
               style="
-                position: relative;
-                background: url('Atm-mandiri.png') center/cover no-repeat;
-                color: #000000;
-                font-weight: bold;
-                padding: 30px 20px;
-                border-radius: 16px;
+                clip-path: polygon(
+                  25% 6.7%,
+                  75% 6.7%,
+                  100% 50%,
+                  75% 93.3%,
+                  25% 93.3%,
+                  0% 50%
+                );
+                width: 250px;
+                height: 250px;
+                margin: 0 auto;
+                overflow: hidden;
               "
             >
-              <br /><br /><br /><br /><br />
-              <div
-                style="
-                  font-family: 'Share Tech Mono', monospace;
-                  font-size: 1.6em;
-                  letter-spacing: 3px;
-                "
-              >
-                1710 0076 44605
+              <img
+                src="img/IMG_0033_20250629_142033_3600 (1).jpeg.jpg"
+                alt="Foto Mempelai"
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </div>
+            <p style="font-style: italic; margin-top: 20px">
+              Kami mengundang anda untuk menghadiri acara pernikahan dari
+            </p>
+            <h1
+              style="
+                font-family: 'Great Vibes', cursive;
+                font-size: 2.5em;
+                margin: 10px 0;
+              "
+            >
+              Fadli & Ulum
+            </h1>
+            <div style="margin: 20px 0">
+              <div>
+                <strong>RESEPSI</strong><br />
+                PUKUL 10.00 WIB - Selesai
               </div>
-              <div style="margin: 10px 0 20px">ACH. FADLI FATURROCHIM</div>
-              <input
-                type="text"
-                value="1710007644605"
-                id="rekInput"
-                style="position: absolute; left: -9999px"
+            </div>
+            <p>Kediaman Mempelai Wanita</p>
+            <p
+              style="
+                font-family: 'Playfair Display', serif;
+                font-size: 1.2em;
+                font-style: italic;
+                margin-top: 20px;
+              "
+            >
+              Selasa, 19 Agustus 2025
+            </p>
+            <div class="simply-countdown"></div>
+          </div>
+        </section>
+        <!-- <section class="page">
+          <div class="isi">
+            <img src="bismillah.png" alt="" style="width: 70%" />
+            <p style="font-size: 125%">
+              وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا
+              لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً
+              وَّرَحْمَةً ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ
+            </p>
+            <p>
+              "Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan
+              pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu
+              merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta
+              dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar
+              terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir"
+            </p>
+            <p>– QS. Ar-Rum 21 –</p>
+          </div>
+        </section> -->
+        <section class="page">
+          <div class="isi">
+            <h2
+              style="
+                font-family: 'Playfair Display', serif;
+                font-size: 1.2em;
+                font-style: italic;
+              "
+            >
+              Assalamu'alaikum
+            </h2>
+            <p>
+              Alhamdulillahi Rabbil ‘Alamin, dengan rahmat dan ridho Allah
+              Subhanahu wa Ta’ala, kami telah melangsungkan akad nikah putra dan
+              putri kami
+            </p>
+            <br />
+            <div
+              style="
+                width: 250px;
+                height: 320px;
+                margin: 0 auto;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 4px solid #d19aaa;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* opsional: bayangan */
+              "
+            >
+              <img
+                src="img/img2.jpg"
+                alt="Foto Mempelai"
+                style="width: 100%; height: 100%; object-fit: cover"
               />
             </div>
             <br />
-            <button
-              id="copyBtn"
-              onclick="copyRekening()"
+            <p
               style="
-                padding: 8px 20px;
-                border: none;
-                background: #0074d9;
-                color: white;
-                border-radius: 8px;
+                font-family: 'Great Vibes', cursive;
+                font-size: 2.5em;
+                margin: 10px 0;
               "
             >
-              Copy
-            </button>
-            <button
-              onclick="hideGift()"
+              Achmad Fadli Faturrochim
+            </p>
+            <p>Putra dari Bapak Ali Muchtar & Ibu Misrani</p>
+            <b>(Banyuwangi, Jawa Timur)</b>
+            <p
               style="
-                padding: 8px 20px;
-                border: none;
-                background: #ffffff;
-                color: rgb(255, 0, 0);
-                border-radius: 8px;
+                font-family: 'Great Vibes', cursive;
+                font-size: 2.5em;
+                margin: 10px 0;
               "
             >
-              Tutup
-            </button>
+              &
+            </p>
+            <p
+              style="
+                font-family: 'Great Vibes', cursive;
+                font-size: 2.5em;
+                margin: 10px 0;
+              "
+            >
+              Ludfi Hidayatul Ulum
+            </p>
+            <p>Putri dari Bapak Lutfianto & Ibu Yanti</p>
+            <b>(Blitar, Jawa Timur)</b>
+            <br />
+            <br />
+            <div
+              style="
+                width: 250px;
+                height: 320px;
+                margin: 0 auto;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 4px solid #d19aaa; /* opsional: bingkai */
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* opsional: bayangan */
+              "
+            >
+              <img
+                src="img/img2.jpg"
+                alt="Foto Mempelai"
+                style="width: 100%; height: 100%; object-fit: cover"
+              />
+            </div>
           </div>
-        </div>
+        </section>
+        <section class="page">
+          <div class="isi">
+            <img src="img/bismillah.png" alt="" style="width: 70%" />
+            <p style="font-size: 125%">
+              وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا
+              لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً
+              وَّرَحْمَةً ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ
+            </p>
+            <p>
+              "Di antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan
+              pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu
+              merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta
+              dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar
+              terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir"
+            </p>
+            <p>– QS. Ar-Rum 21 –</p>
+            <div class="simply-countdown"></div>
+            <p>
+              Untuk itu, dengan segala hormat dan kerendahan hati, kami
+              mengundang Bapak/Ibu/Saudara/i untuk hadir dalam acara tasyakuran
+              pernikahan yang akan kami selenggarakan pada:
+            </p>
+            <p
+              style="
+                font-family: 'Playfair Display', serif;
+                font-size: 1.2em;
+                font-style: italic;
+                margin-top: 20px;
+              "
+            >
+              Selasa, 19 Agustus 2025
+            </p>
+            <p>Kediaman Mempelai Wanita</p>
+            <a
+              class="btn-open"
+              href="https://maps.app.goo.gl/JearkZ1Dec5aQzJS7?g_st=aw"
+              >Lihat Map</a
+            >
+            <br /><br /><br /><br /><br />
+          </div>
+        </section>
+        <section class="page">
+          <div class="isi">
+            <h2>Galeri</h2>
+            <div class="gallery">
+              <img src="img/img1.jpeg" /><img src="img/img2.jpg" /><img
+                src="img/img3.jpg"
+              />
+              <img src="img/img4.jpg" /><img src="img/img5.jpg" /><img
+                src="img/img6.png"
+              />
+              <img src="img/img7.jpg" /><img src="img/img8.jpg" /><img
+                src="img/img9.jpg"
+              />
+              <img src="img/img10.jpg" /><img src="img/img11.jpeg" /><img
+                src="img/img12.jpg"
+              />
+              <img src="img/img13.jpg" /><img src="img/img14.jpg" /><img
+                src="img/img15.jpg"
+              />
+            </div>
+          </div>
+        </section>
+        <section class="page">
+          <div class="isi">
+            <h2>Love Story</h2>
+            <div
+              style="
+                position: relative;
+                max-width: 380px;
+                margin: 0 auto;
+                text-align: left;
+              "
+            >
+              <div style="border-left: 2px solid #e74c3c; padding-left: 20px">
+                <div style="margin-bottom: 30px; position: relative">
+                  <div
+                    style="
+                      position: absolute;
+                      left: -20px;
+                      top: 0;
+                      width: 16px;
+                      height: 16px;
+                      background: #e74c3c;
+                      border-radius: 50%;
+                    "
+                  ></div>
+                  <strong>2018, Oktober</strong>
+                  <p>
+                    Di tengah hiruk-pikuk kegiatan santri di media sosial,
+                    sebuah flyer AISNU mencuri perhatian Syifa’. Ia melihat foto
+                    santri putri bernama Rania Nurul Rizqia yang meneduhkan
+                    hatinya.
+                  </p>
+                </div>
 
-        <p>Penutup & ucapan terima kasih 🙏</p>
+                <div style="margin-bottom: 30px; position: relative">
+                  <div
+                    style="
+                      position: absolute;
+                      left: -20px;
+                      top: 0;
+                      width: 16px;
+                      height: 16px;
+                      background: #e74c3c;
+                      border-radius: 50%;
+                    "
+                  ></div>
+                  <strong>2021, Oktober</strong>
+                  <p>
+                    Cinta sejati takkan hilang begitu saja. Dalam sebuah ajang
+                    Pemilihan Duta Santri Nasional di Yogyakarta, keduanya
+                    dipertemukan. Rania, dengan kecantikannya dan kecerdasannya,
+                    memikat hati Syifa’. Setiap kalimat dan senyuman Rania,
+                    menjadi kenangan tak terlupakan.
+                  </p>
+                </div>
+
+                <div style="margin-bottom: 30px; position: relative">
+                  <div
+                    style="
+                      position: absolute;
+                      left: -20px;
+                      top: 0;
+                      width: 16px;
+                      height: 16px;
+                      background: #e74c3c;
+                      border-radius: 50%;
+                    "
+                  ></div>
+                  <strong>2022, September</strong>
+                  <p>
+                    Seperti yang sering terjadi dalam cerita cinta, takdir
+                    memisahkan mereka untuk sementara. Rania melanjutkan studi
+                    S2-nya di negeri yang jauh, Edinburgh-Skotlandia, sementara
+                    Syifa’ menempuh magister di Jakarta.
+                  </p>
+                </div>
+
+                <div style="margin-bottom: 30px; position: relative">
+                  <div
+                    style="
+                      position: absolute;
+                      left: -20px;
+                      top: 0;
+                      width: 16px;
+                      height: 16px;
+                      background: #e74c3c;
+                      border-radius: 50%;
+                    "
+                  ></div>
+                  <strong>2023, Oktober</strong>
+                  <p>
+                    Tahun ini menjadi titik balik dalam kisah cinta mereka.
+                    Rania kembali ke tanah air, dan keduanya bertemu di ajang
+                    Pemilihan Duta Santri Nasional di Surabaya. Selama agenda
+                    berlangsung, Rania tertarik pada kebaikan, kebijaksanaan,
+                    dan ketulusan Syifa’ sebagai Ketua Umum Duta Santri
+                    Nasional. Syifa’ akhirnya mengungkapkan perasaan yang selama
+                    ini dia simpan kepada Rania.
+                  </p>
+                </div>
+
+                <div style="margin-bottom: 0; position: relative">
+                  <div
+                    style="
+                      position: absolute;
+                      left: -20px;
+                      top: 0;
+                      width: 16px;
+                      height: 16px;
+                      background: #e74c3c;
+                      border-radius: 50%;
+                    "
+                  ></div>
+                  <strong>2023, November</strong>
+                  <p>
+                    Setelah berkenalan lebih jauh serta menyamakan visi dan misi
+                    hidup, Syifa’ memutuskan untuk silaturahmi dan meminta restu
+                    kepada orang tua Rania. Rania pun melakukan hal yang sama.
+                    Dengan izin Allah dan dukungan orang tua, Syifa’ dan Rania
+                    memutuskan untuk melanjutkan ibadah cinta ini dalam ikatan
+                    pernikahan mereka yang mulia.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="page">
+          <div class="isi">
+            <h2>RSVP & Ucapan</h2>
+            <form id="rsvpForm">
+              <input type="text" id="name" placeholder="Nama Anda" required />
+              <textarea
+                id="message"
+                placeholder="Ucapan..."
+                required
+                style="height: 150px"
+              ></textarea>
+              <select id="attendance">
+                <option value="Hadir">Hadir</option>
+                <option value="Tidak Hadir">Tidak Hadir</option>
+              </select>
+              <button type="submit">Kirim</button>
+            </form>
+            <div id="historyList"></div>
+          </div>
+        </section>
+        <section class="page">
+          <div class="isi">
+            <h2>Gift</h2>
+            <div class="gift">
+              <div class="gift-card">
+                <br /><br /><br />
+                <div
+                  style="
+                    font-family: 'Share Tech Mono', monospace;
+                    font-size: 1.6em;
+                    letter-spacing: 3px;
+                  "
+                >
+                  1710 0076 44605
+                </div>
+                <div style="margin: 10px 0 20px">ACH. FADLI FATURROCHIM</div>
+                <input
+                  type="text"
+                  value="1710007644605"
+                  id="rekInput"
+                  style="position: absolute; left: -9999px"
+                />
+
+                <br />
+                <button
+                  id="copyBtn"
+                  onclick="copyRekening()"
+                  style="
+                    padding: 8px 20px;
+                    border: none;
+                    background: #0074d9;
+                    color: white;
+                    border-radius: 8px;
+                  "
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="page">
+          <div class="isi">
+            <h2>Terima Kasih</h2>
+            <p>
+              Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila
+              Bapak/Ibu/Saudara/i, berkenan hadir dan memberikan do’a restu
+              kepada kami.
+            </p>
+
+            <h1>Fadli & Ulum</h1>
+          </div>
+        </section>
+      </div>
+      <div class="menu">
+        <button onclick="goToPage(0)" title="Pembuka">
+          <i class="bi bi-house"></i>
+        </button>
+        <button onclick="goToPage(1)" title="Mempelai">
+          <i class="bi bi-person-hearts"></i>
+        </button>
+        <button onclick="goToPage(2)" title="Tempat">
+          <i class="bi bi-geo-alt"></i>
+        </button>
+        <button onclick="goToPage(3)" title="Galeri">
+          <i class="bi bi-images"></i>
+        </button>
+        <button onclick="goToPage(4)" title="Kisah">
+          <i class="bi bi-book"></i>
+        </button>
+        <button onclick="goToPage(5)" title="Doa">
+          <i class="bi bi-stars"></i>
+        </button>
+        <button onclick="goToPage(6)" title="RSVP">
+          <i class="bi bi-envelope"></i>
+        </button>
+        <button onclick="goToPage(7)" title="Ucapan">
+          <i class="bi bi-heart"></i>
+        </button>
+        <button id="music-toggle" class="music-button" title="Musik">
+          <i class="bi bi-pause-circle"></i>
+        </button>
       </div>
     </div>
-
-    <script>
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get("to");
-      <!-- const id = "d3cd583e"; -->
-      const bgm = document.getElementById("bgm");
-
-      fetch(
-        "https://script.google.com/macros/s/AKfycbzFdeqdxNZEiBKiVTH4jivhpggNYKMMh1rNT1oDUgriA1CLSm9RR9fjb3jYNWXIx0ap/exec?to=" +
-          id
-      ) // Ganti dengan URL Apps Script kamu
-        .then((res) => res.json())
-        .then((data) => {
-          if (data && data.nama) {
-            document.getElementById("namaTamu").innerText =
-              "Kepada Yth: " + data.nama;
-          } else {
-            document.getElementById("namaTamu").innerText =
-              "Tamu tidak dikenal.";
-          }
-        });
-      function openInvitation() {
-        document.getElementById("cover").style.display = "none";
-        const mainContent = document.getElementById("mainContent");
-        mainContent.classList.remove("hidden");
-        document.getElementById("bgm").play();
-        revealSections();
-        generateBubbles();
-      }
-
-      const countdown = document.getElementById("timer");
-      const eventDate = new Date("2025-08-19T00:00:00");
-      setInterval(() => {
-        const now = new Date();
-        const diff = eventDate - now;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / (1000 * 60)) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-        countdown.textContent = `${days} hari ${hours} jam ${minutes} menit ${seconds} detik`;
-      }, 1000);
-      function toggleDarkMode() {
-        document.body.classList.toggle("dark-mode");
-      }
-      function revealSections() {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-              }
-            });
-          },
-          { threshold: 0.1 }
-        );
-
-        document.querySelectorAll(".section").forEach((section) => {
-          observer.observe(section);
-        });
-      }
-      function showGift() {
-        document.getElementById("giftPanel").classList.add("active");
-      }
-      function hideGift() {
-        document.getElementById("giftPanel").classList.remove("active");
-      }
-      function copyRekening() {
-        const input = document.getElementById("rekInput");
-        input.select();
-        input.setSelectionRange(0, 99999);
-        document.execCommand("copy");
-        const btn = document.getElementById("copyBtn");
-        btn.textContent = "Berhasil disalin";
-        setTimeout(() => (btn.textContent = "Copy"), 500);
-      }
-      function generateBubbles() {
-        const layer = document.getElementById("bubbleLayer");
-        for (let i = 0; i < 50; i++) {
-          const bubble = document.createElement("div");
-          bubble.classList.add("bubble");
-          bubble.style.left = Math.random() * 100 + "vw";
-          bubble.style.animationDuration = Math.random() * 5 + 5 + "s";
-          bubble.style.width = bubble.style.height =
-            Math.random() * 10 + 10 + "px";
-          layer.appendChild(bubble);
-        }
-      }
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
